@@ -9,7 +9,7 @@ namespace ConsoleApp1
             var customer = new Customer
             {
                 Name = "John",
-                Age = -9
+                Age = 30
             };
 
             var employee = new Employee
@@ -49,3 +49,4 @@ namespace ConsoleApp1
         }
     }
 }
+
