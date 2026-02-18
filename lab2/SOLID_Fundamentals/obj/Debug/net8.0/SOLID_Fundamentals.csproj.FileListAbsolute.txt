@@ -1,0 +1,11 @@
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\bin\Debug\net8.0\SOLID_Fundamentals.deps.json
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\bin\Debug\net8.0\SOLID_Fundamentals.dll
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\bin\Debug\net8.0\SOLID_Fundamentals.pdb
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\SOLID_Fundamentals.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\SOLID_Fundamentals.AssemblyInfoInputs.cache
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\SOLID_Fundamentals.AssemblyInfo.cs
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\SOLID_Fundamentals.csproj.CoreCompileInputs.cache
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\SOLID_Fundamentals.dll
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\refint\SOLID_Fundamentals.dll
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\SOLID_Fundamentals.pdb
+C:\Users\Admin\not_official\C#\Makarov_6\lab2\SOLID_Fundamentals\obj\Debug\net8.0\ref\SOLID_Fundamentals.dll
