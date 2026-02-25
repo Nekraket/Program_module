@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Фабричные фигуры" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" x:Name="FiguresPanel" Orientation="Horizontal"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 10">
+            <Label Content="Цвет:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="ColorComboBox" Width="120" SelectionChanged="ColorComboBox_SelectionChanged">
+                <ComboBoxItem Content="Красный" IsSelected="True"/>
+                <ComboBoxItem Content="Синий"/>
+                <ComboBoxItem Content="Зеленый"/>
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </Window>
