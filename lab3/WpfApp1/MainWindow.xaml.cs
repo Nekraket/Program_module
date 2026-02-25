@@ -5,9 +5,7 @@ namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
-        private CircleCreator _currentCircleCreator;
-        private SquareCreator _currentSquareCreator;
-        private TriangleCreator _currentTriangleCreator;
+        private IFigureFactory _currentFactory;
 
         public MainWindow()
         {
@@ -30,19 +28,13 @@ namespace WpfApp1
                 switch (selectedItem.Content.ToString())
                 {
                     case "Красный":
-                        _currentCircleCreator = new RedCircleCreator();
-                        _currentSquareCreator = new RedSquareCreator();
-                        _currentTriangleCreator = new RedTriangleCreator();
+                        _currentFactory = new RedFactory();
                         break;
                     case "Синий":
-                        _currentCircleCreator = new BlueCircleCreator();
-                        _currentSquareCreator = new BlueSquareCreator();
-                        _currentTriangleCreator = new BlueTriangleCreator();
+                        _currentFactory = new BlueFactory();
                         break;
                     case "Зеленый":
-                        _currentCircleCreator = new GreenCircleCreator();
-                        _currentSquareCreator = new GreenSquareCreator();
-                        _currentTriangleCreator = new GreenTriangleCreator();
+                        _currentFactory = new GreenFactory();
                         break;
                     default:
                         return;
@@ -50,9 +42,9 @@ namespace WpfApp1
 
                 FiguresPanel.Children.Clear();
 
-                FiguresPanel.Children.Add(_currentCircleCreator.CreateCircle().CreateUIElement());
-                FiguresPanel.Children.Add(_currentSquareCreator.CreateSquare().CreateUIElement());
-                FiguresPanel.Children.Add(_currentTriangleCreator.CreateTriangle().CreateUIElement());
+                FiguresPanel.Children.Add(_currentFactory.CreateCircle().CreateUIElement());
+                FiguresPanel.Children.Add(_currentFactory.CreateSquare().CreateUIElement());
+                FiguresPanel.Children.Add(_currentFactory.CreateTriangle().CreateUIElement());
             }
         }
 

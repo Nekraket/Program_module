@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DBAC3267-0E71-4830-8ED4-69B30EFE5CF5}|WpfApp1.csproj|c:\\users\\admin\\not_official\\c#\\makarov_6\\program_module\\lab3\\wpfapp1\\interfaces.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBAC3267-0E71-4830-8ED4-69B30EFE5CF5}|WpfApp1.csproj|solutionrelative:interfaces.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DBAC3267-0E71-4830-8ED4-69B30EFE5CF5}|WpfApp1.csproj|c:\\users\\admin\\not_official\\c#\\makarov_6\\program_module\\lab3\\wpfapp1\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DBAC3267-0E71-4830-8ED4-69B30EFE5CF5}|WpfApp1.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -26,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,33 +42,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Creators.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Creators.cs",
-              "RelativeDocumentMoniker": "Creators.cs",
-              "ToolTip": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Creators.cs",
-              "RelativeToolTip": "Creators.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAuwDQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T14:14:57.236Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Fidures.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Fidures.cs",
               "RelativeDocumentMoniker": "Fidures.cs",
               "ToolTip": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Fidures.cs",
               "RelativeToolTip": "Fidures.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAowAkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-25T14:01:56.162Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
+              "Title": "Creators.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Creators.cs",
+              "RelativeDocumentMoniker": "Creators.cs",
+              "ToolTip": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Creators.cs",
+              "RelativeToolTip": "Creators.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T14:14:57.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -76,15 +80,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCEAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-25T11:15:11.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Interfaces.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Interfaces.cs",
+              "RelativeDocumentMoniker": "Interfaces.cs",
+              "ToolTip": "C:\\Users\\Admin\\not_official\\C#\\Makarov_6\\Program_module\\lab3\\WpfApp1\\Interfaces.cs",
+              "RelativeToolTip": "Interfaces.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAmwDEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T15:48:27.637Z",
               "EditorCaption": ""
             }
           ]
