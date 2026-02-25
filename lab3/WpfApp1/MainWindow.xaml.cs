@@ -13,6 +13,7 @@ namespace WpfApp1
 {
     public partial class MainWindow : Window
     {
+        //проверка
         public MainWindow()
         {
             InitializeComponent();
