@@ -16,5 +16,19 @@
             Console.WriteLine($"Доп. комплектующие: {(AdditionalComponents.Count > 0 ? string.Join(", ", AdditionalComponents) : "Не указано")}");
             Console.WriteLine("-------------------------------------");
         }
+
+
+        public Computer ShallowCopy()
+        {
+            return (Computer)this.MemberwiseClone();
+        }
+
+        public Computer DeepCopy()
+        {
+            Computer clone = (Computer)this.MemberwiseClone();
+            clone.AdditionalComponents = new List<string>(this.AdditionalComponents);
+
+            return clone;
+        }
     }
 }
