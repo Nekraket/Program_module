@@ -425,3 +425,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+
+
+# Temporary Office files
+~$*
+*.tmp
