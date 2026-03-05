@@ -2,7 +2,7 @@
 {
     internal class PrototypeRegistry
     {
-        private static PrototypeRegistry _instance;
+        private static volatile PrototypeRegistry _instance;
 
         private static readonly object _lock = new object();
 
