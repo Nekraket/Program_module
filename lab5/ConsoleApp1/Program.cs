@@ -90,6 +90,22 @@
 
             Console.WriteLine("\nПопытка прочитать папку как файл (должна быть ошибка):");
             fileSystem.ReadFile("/Медиа");
+
+
+
+
+            Console.WriteLine("\nЭТАП 3. Паттерн «Фасад»\n");
+
+            Folder cloudRoot = new Folder("CloudRoot");
+            IFileSystem cloudStorage = new FileSystemAdapter(cloudRoot);
+
+            SyncFacade facade = new SyncFacade(fileSystem, cloudStorage);
+
+            Console.WriteLine("ДЕМОНСТРАЦИЯ 1: Синхронизация папки 'Документы' в облако");
+            facade.SyncFolder("/Документы", "/МоиДокументы");
+
+            Console.WriteLine("\nДЕМОНСТРАЦИЯ 2: Резервное копирование папки 'Медиа'");
+            facade.Backup("/Медиа", "/РезервныеКопии");
         }
     }
 }
