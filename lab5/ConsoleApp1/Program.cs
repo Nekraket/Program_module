@@ -57,35 +57,42 @@
 
             IFileSystem fileSystem = new FileSystemAdapter(root);
 
-            Console.WriteLine("Список содержимого корневой папки:");
+            Console.WriteLine("1. Метод ListItems - показывает содержимое папок:");
+
+            Console.WriteLine("   Содержимое корневой папки:");
             var rootItems = fileSystem.ListItems("/");
             foreach (var item in rootItems)
             {
-                Console.WriteLine($"  {item}");
+                Console.WriteLine($"     {item}");
             }
 
-            Console.WriteLine("\nЧтение файла:");
-            byte[] fileData = fileSystem.ReadFile("/Медиа/video.mp4");
-            Console.WriteLine($"Прочитано байт: {fileData.Length}");
-            if (fileData.Length > 0)
+            Console.WriteLine("\n   Содержимое папки 'Медиа':");
+            var mediaItems = fileSystem.ListItems("/Медиа");
+            foreach (var item in mediaItems)
             {
-                Console.Write("Содержимое (первые 8 байт): ");
-                for (int i = 0; i < fileData.Length; i++)
-                {
-                    Console.Write($"{fileData[i]} ");
-                }
-                Console.WriteLine();
+                Console.WriteLine($"     {item}");
             }
 
-            Console.WriteLine("\nЗапись файла:");
+            Console.WriteLine("\n   Содержимое папки 'Фото' (вложенная в Медиа):");
+            var photoItems = fileSystem.ListItems("/Медиа/Фото");
+            foreach (var item in photoItems)
+            {
+                Console.WriteLine($"     {item}");
+            }
+
+            Console.WriteLine("\n2. Метод ReadFile - чтение файла:");
+            byte[] fileData = fileSystem.ReadFile("/Медиа/video.mp4");
+            Console.WriteLine($"   Файл прочитан, получено {fileData.Length} байт");
+
+            Console.WriteLine("\n3. Метод WriteFile - запись файла:");
             fileSystem.WriteFile("/Документы/newfile.txt", new byte[] { 1, 2, 3, 4 });
 
-            Console.WriteLine("\nУдаление элемента:");
+            Console.WriteLine("\n4. Метод DeleteItem - удаление элемента:");
             fileSystem.DeleteItem("/Рабочее/presentation.pptx");
 
-            Console.WriteLine("\nПопытка прочитать папку как файл:");
+            Console.WriteLine("\n5. Обработка ошибок - попытка прочитать папку как файл:");
             byte[] folderData = fileSystem.ReadFile("/Медиа");
-            Console.WriteLine($"Прочитано байт: {folderData.Length}");
+            Console.WriteLine($"   Получено {folderData.Length} байт (пустой массив, так как это папка)");
 
 
 

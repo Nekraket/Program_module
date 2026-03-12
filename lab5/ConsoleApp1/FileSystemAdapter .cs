@@ -21,21 +21,33 @@
 
             for (int i = 0; i < parts.Length; i++)
             {
-                if (string.IsNullOrEmpty(parts[i])) continue;
+                if (string.IsNullOrEmpty(parts[i]))
+                {
+                    continue;
+                }
 
                 if (current is Folder folder)
                 {
                     bool found = false;
+                    int index = 0;
 
-                    foreach (var child in folder.GetChildren())
+                    while (true)
                     {
+                        var child = folder.GetChild(index);
+                        if (child == null)
+                        {
+                            break;
+                        }
+
                         if (child.Name == parts[i])
                         {
                             current = child;
                             found = true;
                             break;
                         }
+                        index++;
                     }
+
                     if (!found)
                     {
                         return null;
@@ -62,8 +74,12 @@
 
             if (item is Folder folder)
             {
-                foreach (var child in folder.GetChildren())
+                int index = 0;
+                while (true)
                 {
+                    var child = folder.GetChild(index);
+                    if (child == null) break;
+
                     if (child is File)
                     {
                         result.Add($"[ФАЙЛ] {child.Name}");
@@ -72,6 +88,7 @@
                     {
                         result.Add($"[ПАПКА] {child.Name}");
                     }
+                    index++;
                 }
             }
             else
