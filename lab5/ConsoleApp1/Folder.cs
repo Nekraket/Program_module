@@ -36,5 +36,11 @@
             }
             return null;
         }
+
+
+        public IReadOnlyList<FileSystemItem> GetChildren()
+        {
+            return _children.AsReadOnly();
+        }
     }
 }

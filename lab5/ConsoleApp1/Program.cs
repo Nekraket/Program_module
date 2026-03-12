@@ -50,6 +50,46 @@
             Console.WriteLine($"Размер папки 'Рабочее': {work.GetSize()} байт");
             Console.WriteLine($"Размер КОРНЕВОЙ ПАПКИ: {root.GetSize()} байт");
 
+
+
+
+            Console.WriteLine("\nЭТАП 2. Паттерн «Адаптер»\n");
+
+            IFileSystem fileSystem = new FileSystemAdapter(root);
+
+
+            Console.WriteLine("Список содержимого корневой папки:");
+            var rootItems = fileSystem.ListItems("/");
+            foreach (var item in rootItems)
+            {
+                Console.WriteLine($"  {item}");
+            }
+
+            Console.WriteLine("\nСписок содержимого папки 'Медиа':");
+            var mediaItems = fileSystem.ListItems("/Медиа");
+            foreach (var item in mediaItems)
+            {
+                Console.WriteLine($"  {item}");
+            }
+
+            Console.WriteLine("\nСписок содержимого папки 'Фото':");
+            var photoItems = fileSystem.ListItems("/Медиа/Фото");
+            foreach (var item in photoItems)
+            {
+                Console.WriteLine($"  {item}");
+            }
+
+            Console.WriteLine("\nЧтение файла:");
+            fileSystem.ReadFile("/Медиа/video.mp4");
+
+            Console.WriteLine("\nЗапись файла:");
+            fileSystem.WriteFile("/Документы/newfile.txt", new byte[] { 1, 2, 3, 4 });
+
+            Console.WriteLine("\nУдаление элемента:");
+            fileSystem.DeleteItem("/Рабочее/presentation.pptx");
+
+            Console.WriteLine("\nПопытка прочитать папку как файл (должна быть ошибка):");
+            fileSystem.ReadFile("/Медиа");
         }
     }
 }
