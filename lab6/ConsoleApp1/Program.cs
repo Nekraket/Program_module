@@ -32,6 +32,33 @@
 
             Console.WriteLine("\n--- ИТОГ ---");
             Console.WriteLine($"Всего создано уникальных легковесов: {factory.GetCount()}");
+
+
+
+            Console.WriteLine("\n=== ЭТАП 2. Паттерн «Заместитель» (Proxy) ===\n");
+
+            Console.WriteLine("Демонстрация ленивой инициализации изображений\n");
+
+            Console.WriteLine("1. Создаём прокси для изображений (без загрузки):");
+            ImageProxy img1 = new ImageProxy("photo1.jpg");
+            ImageProxy img2 = new ImageProxy("photo2.jpg");
+            ImageProxy img3 = new ImageProxy("photo3.jpg");
+
+            Console.WriteLine("\n2. Создаём список изображений (все прокси, загрузки нет):");
+            List<IImage> images = new List<IImage> { img1, img2, img3 };
+
+            Console.WriteLine("\n3. Запрашиваем размер первого изображения (произойдёт загрузка img1):");
+            Console.WriteLine($"   Ширина img1: {img1.GetWidth()}px");
+
+            Console.WriteLine("\n4. Отрисовываем второе изображение (произойдёт загрузка img2):");
+            img2.Draw();
+
+            Console.WriteLine("\n5. Снова запрашиваем размер первого изображения (БЕЗ загрузки, уже загружено):");
+            Console.WriteLine($"   Высота img1: {img1.GetHeight()}px");
+
+            Console.WriteLine("\n6. Третье изображение так и не было использовано - оно НЕ загрузится");
+            Console.WriteLine("   (память сэкономлена)");
+
         }
     }
 }
