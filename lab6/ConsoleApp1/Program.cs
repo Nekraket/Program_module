@@ -59,6 +59,48 @@
             Console.WriteLine("\n6. Третье изображение так и не было использовано - оно НЕ загрузится");
             Console.WriteLine("   (память сэкономлена)");
 
+
+
+            Console.WriteLine("\n=== ЭТАП 3. Паттерн «Мост» (Bridge) ===\n");
+            Console.WriteLine("Демонстрация разделения абстракции (фигур) и реализации (способов рендеринга)\n");
+
+            Console.WriteLine("1. Создаём движки рендеринга:");
+            IRenderingEngine screenEngine = new ScreenRenderer();
+            IRenderingEngine printEngine = new PrintRenderer();
+
+            Console.WriteLine("\n2. Создаём фигуры для экранного рендеринга:");
+            Rectangle screenRect = new Rectangle(screenEngine, 10, 20, 100, 50);
+            Ellipse screenEllipse = new Ellipse(screenEngine, 50, 50, 30, 20);
+            Line screenLine = new Line(screenEngine, 5, 5, 15, 15);
+
+            Console.WriteLine("\n3. Создаём фигуры для печатного рендеринга:");
+            Rectangle printRect = new Rectangle(printEngine, 10, 20, 100, 50);
+            Ellipse printEllipse = new Ellipse(printEngine, 50, 50, 30, 20);
+            Line printLine = new Line(printEngine, 5, 5, 15, 15);
+
+            Console.WriteLine("\n4. Отрисовка всех фигур:");
+            Console.WriteLine("\n--- Экранный рендеринг ---");
+            screenEngine.BeginRender();
+            screenRect.Draw();
+            screenEllipse.Draw();
+            screenLine.Draw();
+            screenEngine.EndRender();
+
+            Console.WriteLine("\n--- Печатный рендеринг ---");
+            printEngine.BeginRender();
+            printRect.Draw();
+            printEllipse.Draw();
+            printLine.Draw();
+            printEngine.EndRender();
+
+            Console.WriteLine("\n5. Демонстрация независимости:");
+            Console.WriteLine("   Перемещаем экранный прямоугольник:");
+            screenRect.Move(5, 10);
+
+            Console.WriteLine("\n   Снова отрисовываем (уже на новой позиции):");
+            screenEngine.BeginRender();
+            screenRect.Draw();
+            screenEngine.EndRender();
         }
     }
 }
