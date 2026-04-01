@@ -4,33 +4,50 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ЭТАП 1. Паттерн «Наблюдатель» (Observer)\n");
-
+            Console.WriteLine("\nЭТАП 1. Паттерн «Наблюдатель» (Observer)");
             EventMonitor monitor = new();
-            monitor.OnMetricExceeded += (e) =>
-            {
-                Console.WriteLine($"[ПОДПИСЧИК 1]: Получено событие!");
-                Console.WriteLine($"[ПОДПИСЧИК 1]: Тип: {e.EventType}");
-                Console.WriteLine($"[ПОДПИСЧИК 1]: {e.Data}");
-                Console.WriteLine($"[ПОДПИСЧИК 1]: Время: {e.Data.Timestamp:HH:mm:ss}");
-            };
 
-            monitor.OnMetricExceeded += (e) =>
-            {
-                Console.WriteLine($"[ПОДПИСЧИК 2]: ВНИМАНИЕ! {e.EventType} на метрике {e.Data.MetricName}!");
-            };
+            Console.WriteLine("\nЭТАП 2. Паттерн «Стратегия» (Strategy)");
+
+            IFormatStrategy textStrategy = new TextFormatStrategy();
+            IFormatStrategy jsonStrategy = new JsonFormatStrategy();
+            IFormatStrategy htmlStrategy = new HtmlFormatStrategy();
+
+            Console.WriteLine("\nЭТАП 3. Паттерн «Шаблонный метод» (Template Method)");
+
+            ConsoleHandler consoleHandler = new ConsoleHandler(textStrategy);
+            FileHandler fileHandler = new FileHandler(jsonStrategy, "events.log");
+
+            Console.WriteLine("Созданы обработчики событий:");
+            Console.WriteLine("  - ConsoleHandler (вывод в консоль, текстовая стратегия)");
+            Console.WriteLine("  - FileHandler    (запись в файл events.log, JSON-стратегия)");
+
+            monitor.OnMetricExceeded += (e) => consoleHandler.ProcessEvent(e);
+            monitor.OnMetricExceeded += (e) => fileHandler.ProcessEvent(e);
+
+            Console.WriteLine("Обработчики подписаны на событие OnMetricExceeded\n");
 
             Console.WriteLine("\n--- Проверка CPU (порог 80) ---");
-            monitor.CheckMetric("CPU", 45, 80);   // Не превышает — событие НЕ генерируется
+            monitor.CheckMetric("CPU", 45, 80);
 
             Console.WriteLine("\n--- Проверка CPU (порог 80) ---");
-            monitor.CheckMetric("CPU", 95, 80);   // Превышает — событие генерируется
+            monitor.CheckMetric("CPU", 95, 80);
 
             Console.WriteLine("\n--- Проверка Memory (порог 70) ---");
-            monitor.CheckMetric("Memory", 85, 70); // Превышает — событие генерируется
+            monitor.CheckMetric("Memory", 85, 70);
 
             Console.WriteLine("\n--- Проверка Network (порог 100) ---");
-            monitor.CheckMetric("Network", 50, 100); // Не превышает — событие НЕ генерируется
+            monitor.CheckMetric("Network", 50, 100);
+
+            Console.WriteLine("\nДИНАМИЧЕСКАЯ СМЕНА СТРАТЕГИИ");
+
+            Console.WriteLine("Меняем стратегию ConsoleHandler с Text на HTML...");
+            consoleHandler.SetStrategy(htmlStrategy);
+
+            Console.WriteLine("\n--- Проверка CPU (порог 80) после смены стратегии ---");
+            monitor.CheckMetric("CPU", 99, 80);
+
+            Console.WriteLine($"Проверьте файл events.log для просмотра записей в JSON-формате");
         }
     }
 }
