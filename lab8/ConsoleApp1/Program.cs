@@ -65,11 +65,30 @@
             doc2.AddToQueue();
             doc3.AddToQueue();
 
-            Console.WriteLine("\n--- Настройка: принтер сломается на втором документе ---\n");
+            // СЦЕНАРИЙ 1: Успешная печать (первый документ)
+            Console.WriteLine("\n--- СЦЕНАРИЙ 1: Успешная печать (документ 1) ---\n");
+            dispatcher.CommandProcessQueue();
+
+            // СЦЕНАРИЙ 2: Ошибка принтера и восстановление (второй документ)
+            Console.WriteLine("\n--- СЦЕНАРИЙ 2: Ошибка принтера и восстановление (документ 2) ---\n");
+
             printer.SimulateFailure = true;
 
-            Console.WriteLine("\n--- Запуск обработки очереди ---\n");
             dispatcher.CommandProcessQueue();
+
+            Console.WriteLine("\n--- Ручное восстановление документа после ошибки ---");
+            doc2.Reset();
+
+            Console.WriteLine("\n--- Повторная печать восстановленного документа ---");
+            dispatcher.CommandProcessQueue();
+
+            // СЦЕНАРИЙ 3: Проверка финального состояния (третий документ)
+            Console.WriteLine("\n--- СЦЕНАРИЙ 3: Проверка финального состояния (документ 3) ---\n");
+
+            dispatcher.CommandProcessQueue();
+
+            Console.WriteLine("\n--- Проверка: попытка печати уже напечатанного документа ---");
+            doc3.Print();
         }
     }
 }
