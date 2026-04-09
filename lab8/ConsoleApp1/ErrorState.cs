@@ -2,25 +2,32 @@
 {
     public class ErrorState : IDocumentState
     {
-        public void Print(Document document)
+        public void Print(Document document, IMediator mediator)
         {
             Console.WriteLine($"[FSM: Error] Печать невозможна. Сначала сбросьте документ (Reset)");
         }
 
-        public void OnPrintSuccess(Document document)
+        public void AddToQueue(Document document, IMediator mediator)
+        {
+            Console.WriteLine($"[FSM: Error] Нельзя добавить в очередь. Сначала сбросьте документ");
+        }
+
+        public void OnPrintSuccess(Document document, IMediator mediator)
         {
             Console.WriteLine($"[FSM: Error] Невозможно: документ в состоянии ошибки");
         }
 
-        public void OnPrintFailure(Document document)
+        public void OnPrintFailure(Document document, IMediator mediator)
         {
             Console.WriteLine($"[FSM: Error] Документ уже в состоянии ошибки");
         }
 
-        public void Reset(Document document)
+        public void Reset(Document document, IMediator mediator)
         {
             Console.WriteLine($"[FSM: Error → New] Документ '{document.Title}' сброшен и готов к повторной печати");
             document.SetState(new NewState());
+
+            mediator.Notify(document, "DocumentReset", document);
         }
     }
 }

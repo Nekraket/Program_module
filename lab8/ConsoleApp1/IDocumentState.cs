@@ -2,9 +2,10 @@
 {
     public interface IDocumentState
     {
-        void Print(Document document);
-        void OnPrintSuccess(Document document);
-        void OnPrintFailure(Document document);
-        void Reset(Document document);
+        void Print(Document document, IMediator mediator);
+        void AddToQueue(Document document, IMediator mediator);
+        void OnPrintSuccess(Document document, IMediator mediator);
+        void OnPrintFailure(Document document, IMediator mediator);
+        void Reset(Document document, IMediator mediator);
     }
 }
