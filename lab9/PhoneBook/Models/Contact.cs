@@ -78,7 +78,7 @@ namespace PhoneBook.Models
                 ValidationError = "Имя контакта не может быть пустым";
                 OnPropertyChanged(nameof(IsValid));
                 OnPropertyChanged(nameof(ValidationError));
-                return;
+                throw new ArgumentException(ValidationError);
             }
 
             if (!IsValidPhone(_phone))
@@ -87,7 +87,7 @@ namespace PhoneBook.Models
                 ValidationError = "Номер телефона имеет неверный формат. Допустимые форматы: +7XXXXXXXXXX, 8XXXXXXXXXX, XXXXXXXXXX";
                 OnPropertyChanged(nameof(IsValid));
                 OnPropertyChanged(nameof(ValidationError));
-                return;
+                throw new ArgumentException(ValidationError);
             }
 
             IsValid = true;
@@ -110,7 +110,7 @@ namespace PhoneBook.Models
             // - (\+7|8)? опционально: +7 или 8
             // - \d{10} ровно 10 цифр
             // - $ конец строки
-            var pattern = @"^(\+7|8)?\d{10}$";
+            var pattern = @"^(\+7|8)?9\d{9}$";
             return Regex.IsMatch(phone, pattern);
         }
     }
