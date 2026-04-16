@@ -4,7 +4,8 @@ namespace PhoneBook.ViewModels.Base
 {
     /// <summary>
     /// Реализация интерфейса ICommand для команд без параметра.
-    /// Команды позволяют View привязывать действия пользователя (например, нажатие кнопки) к методам ViewModel.
+    /// Команды позволяют View привязывать действия пользователя 
+    /// (например, нажатие кнопки) к методам ViewModel.
     /// </summary>
     public class RelayCommand(Action execute, Func<bool>? canExecute = null) : ICommand
     {

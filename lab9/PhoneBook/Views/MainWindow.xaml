@@ -23,7 +23,6 @@
             <Button Content="Удалить" Width="100" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedContact}"/>
         </StackPanel>
 
-        <!-- Список контактов -->
         <DataGrid Grid.Row="3" AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Contacts}" SelectedItem="{Binding SelectedContact}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>

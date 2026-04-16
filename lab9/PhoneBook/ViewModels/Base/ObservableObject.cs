@@ -5,7 +5,8 @@ namespace PhoneBook.ViewModels.Base
 {
     /// <summary>
     /// Базовый класс для всех ViewModel.
-    /// Реализует интерфейс INotifyPropertyChanged для уведомления представления (View) о том, что данные в модели представления (ViewModel) изменились.
+    /// Реализует интерфейс INotifyPropertyChanged для уведомления представления (View) о том, 
+    /// что данные в модели представления (ViewModel) изменились.
     /// </summary>
     public abstract class ObservableObject : INotifyPropertyChanged
     {
