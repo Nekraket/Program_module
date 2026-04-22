@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
-using PhoneBook.Models;
-using PhoneBook.ViewModels.Base;
+﻿using PhoneBook.Models;
 using PhoneBook.Services;
+using PhoneBook.ViewModels.Base;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PhoneBook.ViewModels
 {

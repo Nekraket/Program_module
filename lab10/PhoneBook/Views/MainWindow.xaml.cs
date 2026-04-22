@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using PhoneBook.ViewModels;
 
 namespace PhoneBook.Views
 {
@@ -12,7 +11,6 @@ namespace PhoneBook.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
     }
 }
