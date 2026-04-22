@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using PhoneBook.Models;
 using PhoneBook.ViewModels.Base;
+using PhoneBook.Services;
 
 namespace PhoneBook.ViewModels
 {
@@ -12,6 +13,8 @@ namespace PhoneBook.ViewModels
     /// </summary>
     public class MainViewModel : ObservableObject
     {
+        private readonly IDialogService _dialogService;
+
         public ObservableCollection<Contact> Contacts { get; }
 
         private string _name = string.Empty;
@@ -39,29 +42,41 @@ namespace PhoneBook.ViewModels
 
         public ICommand DeleteCommand { get; }
 
-        public MainViewModel()
+        /// <summary>
+        /// Конструктор с внедрением зависимости IDialogService (Constructor Injection).
+        /// DI-контейнер автоматически передаст реализацию сервиса.
+        /// </summary>
+        public MainViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
+
             Contacts = new ObservableCollection<Contact>();
 
-            AddCommand = new RelayCommand(AddContact, () => CanAddContact());                    //?????
-
+            AddCommand = new RelayCommand(AddContact, CanAddContact);
             DeleteCommand = new RelayCommand<Contact?>(DeleteContact, CanDeleteContact);
         }
 
         private void AddContact()
         {
+            if (Contacts.Any(c => c.Phone == Phone))
+            {
+                _dialogService.ShowWarning("Контакт с таким номером телефона уже существует!");
+                return;
+            }
+
             try
             {
                 var newContact = new Contact(Name, Phone);
-
                 Contacts.Add(newContact);
 
                 Name = string.Empty;
                 Phone = string.Empty;
+
+                _dialogService.ShowInfo("Контакт успешно добавлен!");
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка валидации", MessageBoxButton.OK, MessageBoxImage.Warning);
+                _dialogService.ShowError(ex.Message, "Ошибка валидации");
             }
         }
 
@@ -72,7 +87,12 @@ namespace PhoneBook.ViewModels
 
         private void DeleteContact(Contact? contact)
         {
-            if (contact != null)
+            if (contact == null)
+            {
+                return;
+            }
+
+            if (_dialogService.ShowConfirmation($"Удалить контакт \"{contact.Name}\"?"))
             {
                 Contacts.Remove(contact);
             }
