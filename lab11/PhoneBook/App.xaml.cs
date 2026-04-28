@@ -8,7 +8,7 @@ namespace PhoneBook
 {
     /// <summary>
     /// Точка входа в приложение.
-    /// Настройка IoC-контейнера и запуск приложения.
+    /// Настройка IoC-контейнера и запуск приложения через Shell.
     /// </summary>
     public partial class App : Application
     {
@@ -19,29 +19,36 @@ namespace PhoneBook
             // 1. Создаём коллекцию сервисов
             var services = new ServiceCollection();
 
-            // 2. Регистрируем сервисы (Lifetime)
-            // DialogService — Singleton(один экземпляр на всё приложение), так как он не хранит состояние пользователя.
+            // 2. Регистрируем сервисы с указанием Lifetime
+
+            // DialogService — Singleton (не хранит состояние)
             services.AddSingleton<IDialogService, DialogService>();
 
-            // 3. MainViewModel — Transient(новый экземпляр при каждом запросе) (при навигации нам будут нужны новые экземпляры)
-            services.AddTransient<ContactsListViewModel>();
+            // NavigationService — Singleton (хранит состояние CurrentViewModel)
+            services.AddSingleton<INavigationService, NavigationService>();
 
-            // 4. MainWindow  — Singleton с явной передачей DataContext через лямбда-выражение
-            // Окно создаётся один раз, DataContext получается из контейнера
+            // 3. Регистрируем ViewModel — Transient (новый экземпляр при каждом переходе)
+            services.AddTransient<ContactsListViewModel>();
+            services.AddTransient<ContactEditViewModel>();
+            services.AddTransient<AboutViewModel>();
+
+            // 4. Регистрируем MainWindowViewModel — Singleton (живёт всё время работы приложения)
+            services.AddSingleton<MainWindowViewModel>();
+
+            // 5. Регистрируем главное окно (Shell) с явной передачей DataContext через лямбду
             services.AddSingleton<MainWindow>(sp =>
             {
                 var window = new MainWindow();
-                window.DataContext = sp.GetRequiredService<ContactsListViewModel>();
+                window.DataContext = sp.GetRequiredService<MainWindowViewModel>();
                 return window;
             });
 
-            // 5. Создаём контейнер (ServiceProvider)
+            // 6. Создаём контейнер (ServiceProvider)
             var serviceProvider = services.BuildServiceProvider();
 
-            // 6. Получаем главное окно из контейнера и запускаем приложение
+            // 7. Получаем главное окно из контейнера и запускаем приложение
             var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
     }
-
 }

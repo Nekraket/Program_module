@@ -49,7 +49,7 @@ namespace PhoneBook.ViewModels
         /// Конструктор с внедрением зависимости IDialogService (Constructor Injection).
         /// DI-контейнер автоматически передаст реализацию сервиса.
         /// </summary>
-        public ContactsListViewModel(IDialogService dialogService)
+        public ContactsListViewModel(IDialogService dialogService, INavigationService navigationService)
         {
             _dialogService = dialogService;
             _navigationService = navigationService;
