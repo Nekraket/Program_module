@@ -16,7 +16,9 @@ namespace PhoneBook.ViewModels
 
         private readonly INavigationService _navigationService;
 
-        public ObservableCollection<Contact> Contacts { get; }
+        private readonly IContactService _contactService;
+
+        public ObservableCollection<Contact> Contacts => _contactService.Contacts;
 
         private string _name = string.Empty;
         public string Name
@@ -49,12 +51,11 @@ namespace PhoneBook.ViewModels
         /// Конструктор с внедрением зависимости IDialogService (Constructor Injection).
         /// DI-контейнер автоматически передаст реализацию сервиса.
         /// </summary>
-        public ContactsListViewModel(IDialogService dialogService, INavigationService navigationService)
+        public ContactsListViewModel(IDialogService dialogService, INavigationService navigationService, IContactService contactService)
         {
             _dialogService = dialogService;
             _navigationService = navigationService;
-
-            Contacts = new ObservableCollection<Contact>();
+            _contactService = contactService;
 
             AddCommand = new RelayCommand(AddContact, CanAddContact);
             DeleteCommand = new RelayCommand<Contact?>(DeleteContact, CanDeleteContact);
@@ -72,7 +73,7 @@ namespace PhoneBook.ViewModels
             try
             {
                 var newContact = new Contact(Name, Phone);
-                Contacts.Add(newContact);
+                _contactService.AddContact(newContact);
 
                 Name = string.Empty;
                 Phone = string.Empty;
@@ -99,7 +100,7 @@ namespace PhoneBook.ViewModels
 
             if (_dialogService.ShowConfirmation($"Удалить контакт \"{contact.Name}\"?"))
             {
-                Contacts.Remove(contact);
+                _contactService.RemoveContact(contact);
             }
         }
 

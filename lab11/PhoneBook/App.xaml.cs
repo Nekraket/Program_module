@@ -21,6 +21,9 @@ namespace PhoneBook
 
             // 2. Регистрируем сервисы с указанием Lifetime
 
+            // ContactService — Singleton (хранит данные контактов)
+            services.AddSingleton<IContactService, ContactService>();
+
             // DialogService — Singleton (не хранит состояние)
             services.AddSingleton<IDialogService, DialogService>();
 

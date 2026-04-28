@@ -13,15 +13,20 @@ namespace PhoneBook.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
+        private readonly IContactService _contactService;
 
-        private Contact _contact = null!;
+        private Contact _originalContact = null!;
         private string _editName = string.Empty;
         private string _editPhone = string.Empty;
 
-        public ContactEditViewModel(INavigationService navigationService, IDialogService dialogService)
+        public ContactEditViewModel(
+            INavigationService navigationService,
+            IDialogService dialogService,
+            IContactService contactService)
         {
             _navigationService = navigationService;
             _dialogService = dialogService;
+            _contactService = contactService;
 
             SaveCommand = new RelayCommand(SaveContact, CanSaveContact);
             CancelCommand = new RelayCommand(Cancel);
@@ -30,41 +35,23 @@ namespace PhoneBook.ViewModels
         public string EditName
         {
             get => _editName;
-            set
-            {
-                if (Set(ref _editName, value))
-                {
-                    if (_contact != null)
-                        _contact.Name = value;
-                }
-            }
+            set => Set(ref _editName, value);
         }
 
         public string EditPhone
         {
             get => _editPhone;
-            set
-            {
-                if (Set(ref _editPhone, value))
-                {
-                    if (_contact != null)
-                        _contact.Phone = value;
-                }
-            }
+            set => Set(ref _editPhone, value);
         }
 
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
 
-        /// <summary>
-        /// Вызывается сервисом навигации после создания ViewModel.
-        /// Получает выбранный контакт и инициализирует поля редактирования.
-        /// </summary>
         public void OnNavigatedTo(object? parameter)
         {
             if (parameter is Contact contact)
             {
-                _contact = contact;
+                _originalContact = contact;
                 EditName = contact.Name;
                 EditPhone = contact.Phone;
             }
@@ -79,13 +66,13 @@ namespace PhoneBook.ViewModels
         {
             try
             {
-                var validatedContact = new Contact(EditName, EditPhone);
+                // Создаём новый контакт с отредактированными данными
+                var updatedContact = new Contact(EditName, EditPhone);
 
-                _contact.Name = validatedContact.Name;
-                _contact.Phone = validatedContact.Phone;
+                // Обновляем через сервис (заменяем старый контакт новым)
+                _contactService.UpdateContact(_originalContact, updatedContact);
 
                 _dialogService.ShowInfo("Контакт успешно сохранён!");
-
                 _navigationService.NavigateTo<ContactsListViewModel>();
             }
             catch (ArgumentException ex)
