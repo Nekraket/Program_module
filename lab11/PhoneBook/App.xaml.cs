@@ -24,14 +24,14 @@ namespace PhoneBook
             services.AddSingleton<IDialogService, DialogService>();
 
             // 3. MainViewModel — Transient(новый экземпляр при каждом запросе) (при навигации нам будут нужны новые экземпляры)
-            services.AddTransient<MainViewModel>();
+            services.AddTransient<ContactsListViewModel>();
 
             // 4. MainWindow  — Singleton с явной передачей DataContext через лямбда-выражение
             // Окно создаётся один раз, DataContext получается из контейнера
             services.AddSingleton<MainWindow>(sp =>
             {
                 var window = new MainWindow();
-                window.DataContext = sp.GetRequiredService<MainViewModel>();
+                window.DataContext = sp.GetRequiredService<ContactsListViewModel>();
                 return window;
             });
 

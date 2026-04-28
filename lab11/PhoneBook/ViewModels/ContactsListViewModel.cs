@@ -10,7 +10,7 @@ namespace PhoneBook.ViewModels
     /// Главная ViewModel приложения — посредник между Model (Contact) и View (MainWindow).
     /// Содержит логику представления: коллекцию контактов, команды добавления/удаления.
     /// </summary>
-    public class MainViewModel : ObservableObject
+    public class ContactsListViewModel : ObservableObject
     {
         private readonly IDialogService _dialogService;
 
@@ -45,7 +45,7 @@ namespace PhoneBook.ViewModels
         /// Конструктор с внедрением зависимости IDialogService (Constructor Injection).
         /// DI-контейнер автоматически передаст реализацию сервиса.
         /// </summary>
-        public MainViewModel(IDialogService dialogService)
+        public ContactsListViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
 
