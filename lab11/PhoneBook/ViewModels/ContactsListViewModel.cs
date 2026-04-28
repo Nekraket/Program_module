@@ -14,6 +14,8 @@ namespace PhoneBook.ViewModels
     {
         private readonly IDialogService _dialogService;
 
+        private readonly INavigationService _navigationService;
+
         public ObservableCollection<Contact> Contacts { get; }
 
         private string _name = string.Empty;
@@ -41,6 +43,8 @@ namespace PhoneBook.ViewModels
 
         public ICommand DeleteCommand { get; }
 
+        public ICommand EditCommand { get; }
+
         /// <summary>
         /// Конструктор с внедрением зависимости IDialogService (Constructor Injection).
         /// DI-контейнер автоматически передаст реализацию сервиса.
@@ -48,11 +52,13 @@ namespace PhoneBook.ViewModels
         public ContactsListViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
+            _navigationService = navigationService;
 
             Contacts = new ObservableCollection<Contact>();
 
             AddCommand = new RelayCommand(AddContact, CanAddContact);
             DeleteCommand = new RelayCommand<Contact?>(DeleteContact, CanDeleteContact);
+            EditCommand = new RelayCommand<Contact?>(EditContact, (c) => c != null);
         }
 
         private void AddContact()
@@ -100,6 +106,14 @@ namespace PhoneBook.ViewModels
         private bool CanDeleteContact(Contact? contact)
         {
             return contact != null;
+        }
+
+        private void EditContact(Contact? contact)
+        {
+            if (contact != null)
+            {
+                _navigationService.NavigateTo<ContactEditViewModel>(contact);
+            }
         }
     }
 }
