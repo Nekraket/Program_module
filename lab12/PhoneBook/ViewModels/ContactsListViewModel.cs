@@ -12,13 +12,13 @@ namespace PhoneBook.ViewModels
     /// </summary>
     public class ContactsListViewModel : ObservableObject
     {
+        private readonly PhoneBookDbНекрасова2307б2Context _context;
+
         private readonly IDialogService _dialogService;
 
         private readonly INavigationService _navigationService;
 
-        private readonly IContactService _contactService;
-
-        public ObservableCollection<Contact> Contacts => _contactService.Contacts;
+        public ObservableCollection<Contact> Contacts { get; set; }
 
         private string _name = string.Empty;
         public string Name
@@ -47,15 +47,14 @@ namespace PhoneBook.ViewModels
 
         public ICommand EditCommand { get; }
 
-        /// <summary>
-        /// Конструктор с внедрением зависимости IDialogService (Constructor Injection).
-        /// DI-контейнер автоматически передаст реализацию сервиса.
-        /// </summary>
-        public ContactsListViewModel(IDialogService dialogService, INavigationService navigationService, IContactService contactService)
+
+        public ContactsListViewModel(PhoneBookDbНекрасова2307б2Context context, IDialogService dialogService, INavigationService navigationService)
         {
+            _context = context;
             _dialogService = dialogService;
             _navigationService = navigationService;
-            _contactService = contactService;
+
+            Contacts = new ObservableCollection<Contact>(_context.Contacts.ToList());
 
             AddCommand = new RelayCommand(AddContact, CanAddContact);
             DeleteCommand = new RelayCommand<Contact?>(DeleteContact, CanDeleteContact);
@@ -70,20 +69,34 @@ namespace PhoneBook.ViewModels
                 return;
             }
 
-            try
+            if (!IsValidPhone(Phone))
             {
-                var newContact = new Contact(Name, Phone);
-                _contactService.AddContact(newContact);
-
-                Name = string.Empty;
-                Phone = string.Empty;
-
-                _dialogService.ShowInfo("Контакт успешно добавлен!");
+                _dialogService.ShowError("Неверный формат телефона. Допустимо: +7 (XXX) XXX-XX-XX");
+                return;
             }
-            catch (ArgumentException ex)
+
+            var newContact = new Contact
             {
-                _dialogService.ShowError(ex.Message, "Ошибка валидации");
-            }
+                Name = Name,
+                Phone = Phone
+            };
+
+            _context.Contacts.Add(newContact);
+            _context.SaveChanges();
+            Contacts.Add(newContact);
+
+            Name = string.Empty;
+            Phone = string.Empty;
+
+            _dialogService.ShowInfo("Контакт успешно добавлен!");
+        }
+
+        private bool IsValidPhone(string phone)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                return false;
+            var pattern = @"^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$";
+            return System.Text.RegularExpressions.Regex.IsMatch(phone, pattern);
         }
 
         private bool CanAddContact()
@@ -100,7 +113,9 @@ namespace PhoneBook.ViewModels
 
             if (_dialogService.ShowConfirmation($"Удалить контакт \"{contact.Name}\"?"))
             {
-                _contactService.RemoveContact(contact);
+                _context.Contacts.Remove(contact);
+                _context.SaveChanges();
+                Contacts.Remove(contact);
             }
         }
 

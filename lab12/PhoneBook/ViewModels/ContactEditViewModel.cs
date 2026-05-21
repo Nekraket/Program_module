@@ -13,7 +13,7 @@ namespace PhoneBook.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
-        private readonly IContactService _contactService;
+        private readonly PhoneBookDbНекрасова2307б2Context _context;
 
         private Contact _originalContact = null!;
         private string _editName = string.Empty;
@@ -22,11 +22,11 @@ namespace PhoneBook.ViewModels
         public ContactEditViewModel(
             INavigationService navigationService,
             IDialogService dialogService,
-            IContactService contactService)
+            PhoneBookDbНекрасова2307б2Context context)
         {
             _navigationService = navigationService;
             _dialogService = dialogService;
-            _contactService = contactService;
+            _context = context;
 
             SaveCommand = new RelayCommand(SaveContact, CanSaveContact);
             CancelCommand = new RelayCommand(Cancel);
@@ -64,21 +64,30 @@ namespace PhoneBook.ViewModels
 
         private void SaveContact()
         {
-            try
+            if (!IsValidPhone(EditPhone))
             {
-                // Создаём новый контакт с отредактированными данными
-                var updatedContact = new Contact(EditName, EditPhone);
-
-                // Обновляем через сервис (заменяем старый контакт новым)
-                _contactService.UpdateContact(_originalContact, updatedContact);
-
-                _dialogService.ShowInfo("Контакт успешно сохранён!");
-                _navigationService.NavigateTo<ContactsListViewModel>();
+                _dialogService.ShowError("Неверный формат телефона. Допустимо: +7 (XXX) XXX-XX-XX");
+                return;
             }
-            catch (ArgumentException ex)
+
+            _originalContact.Name = EditName;
+            _originalContact.Phone = EditPhone;
+
+            _context.Contacts.Update(_originalContact);
+            _context.SaveChanges();
+
+            _dialogService.ShowInfo("Контакт успешно сохранён!");
+            _navigationService.NavigateTo<ContactsListViewModel>();
+        }
+
+        private bool IsValidPhone(string phone)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
             {
-                _dialogService.ShowError(ex.Message, "Ошибка валидации");
+                return false;
             }
+            var pattern = @"^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$";
+            return System.Text.RegularExpressions.Regex.IsMatch(phone, pattern);
         }
 
         private void Cancel()

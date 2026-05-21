@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PhoneBook.Services;
 using PhoneBook.ViewModels;
 using PhoneBook.Views;
+using PhoneBook.Models;
+using System.Windows;
 
 namespace PhoneBook
 {
@@ -16,29 +18,18 @@ namespace PhoneBook
         {
             base.OnStartup(e);
 
-            // 1. Создаём коллекцию сервисов
             var services = new ServiceCollection();
 
-            // 2. Регистрируем сервисы с указанием Lifetime
+            services.AddDbContext<PhoneBookDbНекрасова2307б2Context>(options =>
+            options.UseSqlServer(
+            "Data Source=DESKTOP-3HCFBNF\\MSSQLSERVER01;Initial Catalog=PhoneBookDB_НЕКРАСОВА_2307Б2;Integrated Security=True;Trust Server Certificate=True"));
 
-            // ContactService — Singleton (хранит данные контактов)
-            services.AddSingleton<IContactService, ContactService>();
-
-            // DialogService — Singleton (не хранит состояние)
             services.AddSingleton<IDialogService, DialogService>();
-
-            // NavigationService — Singleton (хранит состояние CurrentViewModel)
             services.AddSingleton<INavigationService, NavigationService>();
-
-            // 3. Регистрируем ViewModel — Transient (новый экземпляр при каждом переходе)
             services.AddTransient<ContactsListViewModel>();
             services.AddTransient<ContactEditViewModel>();
             services.AddTransient<AboutViewModel>();
-
-            // 4. Регистрируем MainWindowViewModel — Singleton (живёт всё время работы приложения)
             services.AddSingleton<MainWindowViewModel>();
-
-            // 5. Регистрируем главное окно (Shell) с явной передачей DataContext через лямбду
             services.AddSingleton<MainWindow>(sp =>
             {
                 var window = new MainWindow();
@@ -46,10 +37,8 @@ namespace PhoneBook
                 return window;
             });
 
-            // 6. Создаём контейнер (ServiceProvider)
             var serviceProvider = services.BuildServiceProvider();
 
-            // 7. Получаем главное окно из контейнера и запускаем приложение
             var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
